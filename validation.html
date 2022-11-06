@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <input type="number" id="m" placeholder="enter card number" /> -->
+    <input type="text" placeholder="enter otp" id="n" />
+    <button onclick="myCheck()">submit</button>
+    <p>resend <span onclick="otp()">otp</span> </p>
+  </body>
+</html>
+<script>
+    otp();
+  function otp() {
+    setTimeout(function () {
+      alert("your otp is 9092");
+    }, 5000);
+  }
+  var data = JSON.parse(localStorage.getItem("pay")) || [];
+  function myCheck() {
+    var otp = document.querySelector("#n").value;
+    if(otp=="9092"){
+        alert("payment successfull");
+    }
+    else{
+        alert("otp is wrong")
+    }
+  }
+</script>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+          #main{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+
+        }
+        a{
+          color: blue;
+          font-size: large;
+          font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+          margin: 4px;
+        }
+        button{
+          border-radius: 5px;
+        background-color:darkgrey;
+        color:black;
+        padding:5px 9px;
+        font-weight:bold;
+        border: 0px;
+        margin: 15px;
+      
+        }
+        #main>div{
+            text-align: center;
+            box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(119, 119, 131, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+            padding: 20px;
+
+        }
+        #main>div>img{
+            width:90%;
+            height: 300px;
+        }
+        
+        button:hover{
+          color: beige;
+          background-color: darkcyan;
+          border: 0px;
+
+        }
+        #container{
+        
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: repeat( auto);
+        gap: 20px;
+      }
+      #container>div{
+        text-align: center;
+        /* border: 1px solid rgb(161, 11, 11); */
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        height: auto;
+        padding: 20px;
+
+      }
+      #container>div>img{
+        width: 90%;
+        height: 250px;
+      }
+      /* text-decoration:line-through; */
+      
+    
+    </style>
+</head>
+<body>
+    <h2 id="m">Total items: <span></span></h1>
+    <h3>Total cost in Rs: <span></span></h1>
+    <a href="./payment.html"><button>Buy</button></a>  
+      <!-- "></a> -->
+    <div id="container">
+    </div>
+  
+</body>
+</html>
+<script>
+    var cartitems=JSON.parse(localStorage.getItem("cart"))||[];
+    // var total_price=cartitems.reduce(function(acc,el){
+    // return acc+el.price;
+    // },0);
+    cost()
+    function cost(){
+        let x=JSON.parse(localStorage.getItem("cart"))||[];
+        let total=0;
+        x.map(function(el){
+            total+= +el.price;
+        })
+        document.querySelector("h3>span").innerText=total;
+    document.querySelector("h2>span").innerText=x.length;  
+
+    }
+   
+    // document.querySelector("h3>span").innerText=total_price;
+    // document.querySelector("h2>span").innerText=cartitems.length;  
+
+    appendme(cartitems);
+    function appendme(cartitems){
+        document.querySelector("#container").innerHTML="";
+        cartitems.forEach(function(el ,i){
+            var d1=document.createElement("div");
+            var img=document.createElement("img");
+            img.src=el.image_url
+        
+            var title=document.createElement("h4");
+            title.innerText=el.name;
+        
+            var  price=document.createElement("h3");
+            price.innerText=el.price;
+        
+            var strikedoffprice=document.createElement("p");
+            strikedoffprice.innerText=el.strikedoffprice;
+            strikedoffprice.className="str";
+            var button=document.createElement("button");
+            button.innerText="Delete";
+            button.addEventListener("click",function(){
+                remove(el,i);
+            })
+
+          
+            d1.append(img,title, price,strikedoffprice,button);
+            document.querySelector("#container").append(d1);
+        })
+    }
+
+function remove(el, i){
+    let x=JSON.parse(localStorage.getItem("cart"));
+    x.splice(i,1);
+    localStorage.setItem("cart",JSON.stringify(x));
+    appendme(x)
+    cost();
+} 
+</script>

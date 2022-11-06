@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      form {
+        display: grid;
+        width: 40%;
+        margin: auto;
+      }
+      form > input {
+        margin: 5px;
+        padding: 4px;
+        border-radius: 5px;
+      }
+      button {
+        background-color: blueviolet;
+        width: 70px;
+        padding: 5px;
+        border: 0px;
+        border-radius: 3px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input type="text" name="" id="name" placeholder="Enter name" />
+      <input type="number" name="" id="card" placeholder="Enter card number" />
+      <input type="date" id="date" placeholder="Expiry date" />
+      <input type="text" name="" id="cvv" placeholder="Enter cvv" />
+      <button type="submit">submit</button>
+    </form>
+  </body>
+</html>
+<script>
+  var form = document.querySelector("form");
+  form.addEventListener("submit", myfun);
+  var arr = JSON.parse(localStorage.getItem("pay")) || [];
+
+  function myfun() {
+    event.preventDefault();
+    // console.log(form.name.value)
+
+    if (
+      form.card.value == "" ||
+      form.name.value == "" ||
+      form.cvv.value == "" ||
+      form.date.value == ""
+    ) {
+      alert("please fill all the details");
+    } else {
+      let k = form.card.value.toString(); 
+      
+      if (k.length > 9 && form.cvv.value.length==3) {
+        let obj = {
+          card: form.card.value,
+          name: form.name.value,
+          cvv: form.cvv.value,
+          date: form.date.value,
+        };
+        arr.push(obj);
+        localStorage.setItem("pay", JSON.stringify(arr)); 
+        window.location.href = "./validation.html"
+      }
+      else{
+          alert("Information is not vallid")
+      }
+    }
+  }
+</script>
